@@ -1,0 +1,19 @@
+name: Deploy Jupyter Book
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - run: pip install jupyter-book ghp-import
+      - run: jupyter-book build .
+      - run: ghp-import -n -p -f _build/html
+      
